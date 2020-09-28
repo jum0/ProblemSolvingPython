@@ -18,7 +18,7 @@ print(type(line[0])) # <class 'str'>
   - `split()` 이렇게 쓰면 공백을 기준으로 자르게 된다.
 - `type()`
   - 타입을 체크하는 함수
-  - `input()`으로 받은 값의 타입은 `str`이다.
+  - `input()` 으로 받은 값의 타입은 `str` 이다.
 
 ## map(function, iter)
 
@@ -33,9 +33,9 @@ lst = list(map(lambda x: x**2, [0, 1, 2, 3])) #line5
 print(lst) # [0, 1, 4, 9]
 ```
 
-- `map()`함수의 첫 번째 파라미터는 `function(iterable의 각 요소에 적용할 수 있는)`을 써준다.
-- `map()`함수의 두 번째 파라미터는 `list`나 `tuple`과 같은 `iterable`이 온다.
-- `line 5`에서 앞에 `list`를 취한 이유는 `map()`은 `map object`를 리턴하기 때문이다.
+- `map()` 함수의 첫 번째 파라미터는 `function(iterable의 각 요소에 적용할 수 있는)`을 써준다.
+- `map()`  함수의 두 번째 파라미터는 `list`나 `tuple`과 같은 `iterable`이 온다.
+- `line 5`  에서 앞에 `list` 를 취한 이유는 `map()` 은 `map object` 를 리턴하기 때문이다.
 
 ## print("{}".format()) / print(f"{}")
 
@@ -45,7 +45,7 @@ for i in range(2):
   print("{}".format(i))
 ```
 
-- 출력하는 방식에는 `print(f'{변수}')`와 `print("{}".format(변수))` 방식이 편리하다.
+- 출력하는 방식에는 `print(f'{변수}')` 와 `print("{}".format(변수))` 방식이 편리하다.
 
 ## print(, end='') / 줄바꿈 없이 출력
 
@@ -65,7 +65,7 @@ for c in a:
 # a-b-c-d-e-f-g-h-i-j-k
 ```
 
-- `Swift`의 `print(, terminator: )`와 동일하다.
+- `Swift` 의 `print(, terminator: )` 와 동일하다.
 
 ## For _ in range()
 
@@ -100,7 +100,7 @@ for l in range(6, 2, -1):
 # 3
 ```
 
-- `range()` 함수의 기본 구조는 `range(start_value, end_value, step)`이며, `step`은 생략 가능하다.
+- `range()` 함수의 기본 구조는 `range(start_value, end_value, step)` 이며, `step` 은 생략 가능하다.
 
 - 오름차순뿐만 아니라 내림차순도 가능하다.
 
@@ -150,5 +150,25 @@ print('abcde'.center(3, "*"))
 
 - `String.center(길이, 추가할 문자)`
 - 주어진 길이에서 문자열의 길이를 뺀 만큼 앞뒤로 특정 문자를 채운 후, 중앙에 정렬하는 함수
-- 채워지는 과정은 7자리에서 2글자를 채운다면, 우선 `7//2`로 왼쪽에 채울 자릿수를 구해서 출력하고, 문자열 출력, 나머지 빈칸이 오른쪽에 채워진다.
-- `.center()`의 첫 번째 파라미터의 숫자가 문자의 길이보다 작을 경우, 따로 적용되지 않고 그대로 문자열만 출력한다.
+- 채워지는 과정은 7자리에서 2글자를 채운다면, 우선 `7//2` 로 왼쪽에 채울 자릿수를 구해서 출력하고, 문자열 출력, 나머지 빈칸이 오른쪽에 채워진다.
+- `.center()` 의 첫 번째 파라미터의 숫자가 문자의 길이보다 작을 경우, 따로 적용되지 않고 그대로 문자열만 출력한다.
+
+## 삼항연산자
+
+`Boj 10995`
+
+```python
+N = 4
+for i in range(1, N+1):
+  print(("o" if i % 2 == 0 else "x") * i)
+  
+# 출력 결과
+# x
+# oo
+# xxx
+# oooo
+```
+
+- `Python` 에서 ` (조건이 True면 실행 if 조건 else 조건이 False 실행)`
+- `Swift` 에서 ` (조건이 True면 실행 ? 조건 : 조건이 False 실행)` 에서 `if` 는 `?` 와, `else` 는 `:` 와 같은 역할을  한다.
+
