@@ -29,13 +29,13 @@ a, b = map(int, input().split(' ')) # 입력 1 2
 print(type(a), a) # <class 'int'> 1
 print(type(b), b) # <class 'int'> 2
 
-lst = list(map(lambda x: x**2, [0, 1, 2, 3])) #line5
+lst = list(map(lambda x: x**2, [0, 1, 2, 3]))          #line5
 print(lst) # [0, 1, 4, 9]
 ```
 
 - `map()` 함수의 첫 번째 파라미터는 `function(iterable의 각 요소에 적용할 수 있는)`을 써준다.
 - `map()`  함수의 두 번째 파라미터는 `list`나 `tuple`과 같은 `iterable`이 온다.
-- `line 5`  에서 앞에 `list` 를 취한 이유는 `map()` 은 `map object` 를 리턴하기 때문이다.
+- `line5`  에서 앞에 `list` 를 취한 이유는 `map()` 은 `map object` 를 리턴하기 때문이다.
 
 ## print("{}".format()) / print(f"{}")
 
@@ -98,11 +98,16 @@ for l in range(6, 2, -1):
 # 5
 # 4
 # 3
+
+---------------------------
+x = 1          #line31
+for i in (2, x+1):
+  print("ok")
 ```
 
 - `range()` 함수의 기본 구조는 `range(start_value, end_value, step)` 이며, `step` 은 생략 가능하다.
-
 - 오름차순뿐만 아니라 내림차순도 가능하다.
+- `line31` 과 같이 `For` 문의 조건에 충족이 되지 않으면 실행되지 않으며, 오류도 발생하지 않는다.
 
 ## abs(x)
 
@@ -171,4 +176,45 @@ for i in range(1, N+1):
 
 - `Python` 에서 ` (조건이 True면 실행 if 조건 else 조건이 False 실행)`
 - `Swift` 에서 ` (조건이 True면 실행 ? 조건 : 조건이 False 실행)` 에서 `if` 는 `?` 와, `else` 는 `:` 와 같은 역할을  한다.
+
+## 이중 배열 선언
+
+```python
+# 만들려고 하는 이중 배열
+# [
+#   [1, 1],
+#   [1, 1]
+# ]
+
+# (알고리즘 문제를 풀기에) 잘못된 방법
+arr = [[1] * 2] * 2         #line8
+
+# (알고리즘 문제를 풀기에) 올바른 방법
+# case 1.
+arr  = [[1 for col in range(2)] for row in range(2)]
+
+# case 2.
+arr = [[1] * 2 for i in range(2)]
+
+# 만들려고 하는 이중 배열
+# [
+#   [0, 1, 1, 1, 1],
+#   [0, 1, 1, 1, 1]
+# ]
+arr = [[0] + [1 for col in range(4)] for row in range(2)]
+```
+
+- `line8` 과 같이 선언하면, 얕은 복사가 되어 모든 행이 같은 객체로 인식되어 같이 변경된다.
+
+
+
+
+
+
+
+
+
+
+
+
 
