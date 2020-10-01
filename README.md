@@ -206,15 +206,41 @@ arr = [[0] + [1 for col in range(4)] for row in range(2)]
 
 - `line8` 과 같이 선언하면, 얕은 복사가 되어 모든 행이 같은 객체로 인식되어 같이 변경된다.
 
+## 얕은 복사, 깊은 복사
 
+```python
+# 얕은 복사
+a = [[1, 2], [3, 4]]
+b = a.copy()
 
+print(f"a id is {id(a)}") # a's is 140591778118528
+print(f"b id is {id(b)}") # b's is 140591918872576
 
+print(f"a[1] id is {id(a[1])}") # a[1] id is 140591778051520
+print(f"b[1] id is {id(b[1])}") # b[1] id is 140591778051520
 
+b[1].append(5)
+print(a) # [[1, 2], [3, 4, 5]]
+print(b) # [[1, 2], [3, 4, 5]]
 
+# 깊은 복사
+import copy
+a = [[5, 6], [7, 8]]
+b = copy.deepcopy(a)
 
+print(f"a id is {id(a)}") # a's is 140142064899264
+print(f"b id is {id(b)}") # b's is 140142072138624
 
+print(f"a[1] id is {id(a[1])}") # a[1] id is 140142072214208
+print(f"b[1] id is {id(b[1])}") # b[1] id is 140142064898560
 
+b[1].append(9)
+print(a) # [[5, 6], [7, 8]]
+print(b) # [[5, 6], [7, 8, 9]]
+```
 
-
-
-
+- 얕은 복사의 경우, 객체를 복사하여 새로 구성하지만, 내부 객체는 참조 객체이다.
+  - mutable 객체를 수정할 때는 원본과 복사본 둘 다 변경한다.
+  - immutable 객체를 수정할 때는 복사본만 변경한다.
+- 깊은 복사의 경우, 객체를 복사하여 새로운 객체를 만든다.
+  - mutable 객체를 수정해도 원본에 영향에 받지 않는다.
