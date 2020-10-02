@@ -20,23 +20,6 @@ print(type(line[0])) # <class 'str'>
   - 타입을 체크하는 함수
   - `input()` 으로 받은 값의 타입은 `str` 이다.
 
-## map(function, iter)
-
-`Boj 1000`
-
-```python
-a, b = map(int, input().split(' ')) # 입력 1 2
-print(type(a), a) # <class 'int'> 1
-print(type(b), b) # <class 'int'> 2
-
-lst = list(map(lambda x: x**2, [0, 1, 2, 3]))          #line5
-print(lst) # [0, 1, 4, 9]
-```
-
-- `map()` 함수의 첫 번째 파라미터는 `function(iterable의 각 요소에 적용할 수 있는)`을 써준다.
-- `map()`  함수의 두 번째 파라미터는 `list`나 `tuple`과 같은 `iterable`이 온다.
-- `line5`  에서 앞에 `list` 를 취한 이유는 `map()` 은 `map object` 를 리턴하기 때문이다.
-
 ## print("{}".format()) / print(f"{}")
 
 ```python
@@ -244,3 +227,76 @@ print(b) # [[5, 6], [7, 8, 9]]
   - immutable 객체를 수정할 때는 복사본만 변경한다.
 - 깊은 복사의 경우, 객체를 복사하여 새로운 객체를 만든다.
   - mutable 객체를 수정해도 원본에 영향에 받지 않는다.
+
+## map(function, iter)
+
+`Boj 1000` `Boj 11054`
+
+```python
+a, b = map(int, input().split(' ')) # 입력 1 2
+print(type(a), a) # <class 'int'> 1
+print(type(b), b) # <class 'int'> 2
+
+lst = list(map(lambda x: x**2, [0, 1, 2, 3]))          #line5
+print(lst) # [0, 1, 4, 9]
+
+
+########################### 응용 ###########################
+a = [1, 2, 3, 4]
+b = [5, 6, 7, 8]
+
+# 1. a와 b 리스트에서 자리에 맞는 각 원소값을 합한 리스트 출력
+print(list(map(sum, zip(a, b)))) # [6, 8, 10, 12]
+
+# 2. 리스트 a의 각 원소값을 제곱으로 바꾸고, 자리에 맞는 b의 원소값을 더한 리스트 출력
+print(list(map(sum, zip(list(map(lambda x: x**2, a)), b)))) # [6, 10, 16, 24]
+```
+
+- `map()` 함수의 첫 번째 파라미터는 `function(iterable의 각 요소에 적용할 수 있는)`을 써준다.
+- `map()`  함수의 두 번째 파라미터는 `list`나 `tuple`과 같은 `iterable`이 온다.
+- `line5`  에서 앞에 `list` 를 취한 이유는 `map()` 은 `map object` 를 리턴하기 때문이다.
+
+## zip()
+
+`Boj 11054`
+
+```python
+n_list_1 = [1, 2, 3, 4]
+n_list_2 = [5, 6, 7, 8]
+print(list(zip(n_list_1, n_list_2))) # [(1, 5), (2, 6), (3, 7), (4, 8)]
+print(tuple(zip(n_list_1, n_list_2)))  # ((1, 5), (2, 6), (3, 7), (4, 8))
+
+str_list = ['a', 'b', 'c', 'd']
+print(list(zip(n_list_1, str_list))) # [(1, 'a'), (2, 'b'), (3, 'c'), (4, 'd')]
+
+# 개수가 동일하지 않으면 가장 적은 개수를 중심으로 묶는다
+tmp_list_1 = [1]
+tmp_list_2 = ['A', 'B']
+tmp_list_3 = ['a', 'b', 'c']
+print(list(zip(tmp_list_1, tmp_list_2, tmp_list_3))) # [(1, 'A', 'a')]
+```
+
+- `zip` 은 동일한 개수로 이루어진 자료형을 묶어주는 역할을 한다.
+  - 개수가 동일하지 않으면 가장 적은 개수를 중심으로 그 개수만큼만 묶는다.
+
+## list
+
+```python
+a = [1, 2, 3, 4, 5]
+b = a[::-1] # [5, 4, 3, 2, 1]
+c = a[0:len(a):2] # [1, 3, 5]
+
+print(b[1:4:1]) # [4, 3, 2]
+print(b[1:4]) # [4, 3, 2]
+print(b[4:1:-1]) # [1, 2, 3]
+
+s = "abcde"
+print(s[::-1]) # edcba
+print(s[::-1][::2]) # eca
+print(s[::-1][1::2]) # db
+```
+
+- `[start:end:step]` 을 나타낸다.
+- 1차원 배열에서 Slicing으로 복사할 경우(ex `b = a[:]`), 기존의 a에 영향을 미치지 않는다.
+  - 2차원 배열에는 통째로 복사할 경우, 안의 배열 `[[여기],[여기]]` 배열의 원소를 변경할 경우, 원본의 배열도 변경된다.
+  - 알고리즘에서 사용하려면, 1차원 배열은 `[:]` 혹은 `[::]` 을 통해서 복사하고, 2차원 배열은 `deepcopy()` 이용하는 게 좋다.
