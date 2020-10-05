@@ -300,3 +300,20 @@ print(s[::-1][1::2]) # db
 - 1차원 배열에서 Slicing으로 복사할 경우(ex `b = a[:]`), 기존의 a에 영향을 미치지 않는다.
   - 2차원 배열에는 통째로 복사할 경우, 안의 배열 `[[여기],[여기]]` 배열의 원소를 변경할 경우, 원본의 배열도 변경된다.
   - 알고리즘에서 사용하려면, 1차원 배열은 `[:]` 혹은 `[::]` 을 통해서 복사하고, 2차원 배열은 `deepcopy()` 이용하는 게 좋다.
+
+## 제곱 및 제곱근
+
+```python
+import math
+
+# 8의 제곱근 (√8)
+sqrt = math.sqrt(8)
+print(sqrt) # 2.828427124761903
+print(type(sqrt)) # <class 'float'>
+
+# 제곱
+# 3의 4승
+power = math.pow(3, 4)
+print(power) # 81.0
+print(type(power)) # <class 'float'>
+```
