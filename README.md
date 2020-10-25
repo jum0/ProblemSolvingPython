@@ -125,10 +125,10 @@ print(s.center(20, "#"))  # ####Hello World!####
 # 비대칭인 경우
 # 문자열이 짝수 개, 채울 자릿수는 홀수 개
 print('aa'.center(3, '*')) # '*aa'
-print('aa'.center(5, '*')) # '*aa'
+print('aa'.center(5, '*')) # '**aa*'
 print('aa'.center(7, '*')) # '***aa**'
 
-# 문자열애 홀수 개, 채울 자릿수가 짝수 개
+# 문자열이 홀수 개, 채울 자릿수가 짝수 개
 print('cat'.center(6, '*')) # '*cat**'
 print('cat'.center(8, '*')) # '**cat***'
 
@@ -138,7 +138,7 @@ print('abcde'.center(3, "*"))
 
 - `String.center(길이, 추가할 문자)`
 - 주어진 길이에서 문자열의 길이를 뺀 만큼 앞뒤로 특정 문자를 채운 후, 중앙에 정렬하는 함수
-- 채워지는 과정은 7자리에서 2글자를 채운다면, 우선 `7//2` 로 왼쪽에 채울 자릿수를 구해서 출력하고, 문자열 출력, 나머지 빈칸이 오른쪽에 채워진다.
+- 문자열이 가운데 정렬될 때 문자열을 기준으로 오른쪽과 왼쪽에 채워질 문자의 길이가 다른 경우, 가운데에 정렬될 문자열의 길이가 짝수이면 왼쪽에 하나 더, 홀수이면 오른쪽에 하나 더 채워진다.
 - `.center()` 의 첫 번째 파라미터의 숫자가 문자의 길이보다 작을 경우, 따로 적용되지 않고 그대로 문자열만 출력한다.
 
 ## 삼항연산자
@@ -163,7 +163,8 @@ for i in range(1, N+1):
 ## 이중 배열 선언
 
 ```python
-# 만들려고 하는 이중 배열
+# case 1.
+# 만들고자 하는 이중 배열
 # [
 #   [1, 1],
 #   [1, 1]
@@ -173,10 +174,10 @@ for i in range(1, N+1):
 arr = [[1] * 2] * 2         #line8
 
 # (알고리즘 문제를 풀기에) 올바른 방법
-# case 1.
+# sol 1.
 arr  = [[1 for col in range(2)] for row in range(2)]
 
-# case 2.
+# sol 2.
 arr = [[1] * 2 for i in range(2)]
 
 # 만들려고 하는 이중 배열
@@ -245,11 +246,13 @@ print(lst) # [0, 1, 4, 9]
 a = [1, 2, 3, 4]
 b = [5, 6, 7, 8]
 
-# 1. a와 b 리스트에서 자리에 맞는 각 원소값을 합한 리스트 출력
-print(list(map(sum, zip(a, b)))) # [6, 8, 10, 12]
+# 1. a와 b 리스트를 구성하는 원소들의 동일한 인덱스의 값을 합한 리스트 출력
+# [6, 8, 10, 12]
+print(list(map(sum, zip(a, b)))) 
 
-# 2. 리스트 a의 각 원소값을 제곱으로 바꾸고, 자리에 맞는 b의 원소값을 더한 리스트 출력
-print(list(map(sum, zip(list(map(lambda x: x**2, a)), b)))) # [6, 10, 16, 24]
+# 2. 리스트 a의 각 원소값을 제곱으로 바꾸고, a와b 리스트의 동일한 인덱스 값을 합한 리스트 출력
+# [6, 10, 16, 24]
+print(list(map(sum, zip(list(map(lambda x: x**2, a)), b)))) 
 ```
 
 - `map()` 함수의 첫 번째 파라미터는 `function(iterable의 각 요소에 적용할 수 있는)`을 써준다.
@@ -288,7 +291,7 @@ c = a[0:len(a):2] # [1, 3, 5]
 
 print(b[1:4:1]) # [4, 3, 2]
 print(b[1:4]) # [4, 3, 2]
-print(b[4:1:-1]) # [1, 2, 3]
+print(b[4:1:-1]) # [1, 2, 3] # 인덱스 4부터 인덱스 2까지 거꾸로
 
 s = "abcde"
 print(s[::-1]) # edcba
@@ -317,3 +320,28 @@ power = math.pow(3, 4)
 print(power) # 81.0
 print(type(power)) # <class 'float'>
 ```
+
+## collections
+
+`프로그래머스 완주하지 못한 선수`
+
+```python
+import collections
+
+s1 = "Hello World!"
+s2 = "Hello"
+
+print(collections.Counter(s1))
+# Counter({'l': 3, 'o': 2, 'H': 1, 'e': 1, ' ': 1, 'W': 1, 'r': 1, 'd': 1, '!': 1})
+print(list(collections.Counter(s1)))
+# ['H', 'e', 'l', 'o', ' ', 'W', 'r', 'd', '!']
+print(list(collections.Counter(s1) - collections.Counter(s2)))
+# ['l', 'o', ' ', 'W', 'r', 'd', '!']
+print(collections.Counter(s1).most_common())
+# [('l', 3), ('o', 2), ('H', 1), ('e', 1), (' ', 1), ('W', 1), ('r', 1), ('d', 1), ('!', 1)]
+```
+
+- 빈도수가 많은 순서대로 정렬(근데 정확하게 하기 위해서 `.most_comon()` 쓰자)
+-  원소의 개수를 뺄 수도 있다.
+
+## hash
