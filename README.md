@@ -166,19 +166,19 @@ for i in range(1, N+1):
 # case 1.
 # 만들고자 하는 이중 배열
 # [
-#   [1, 1],
-#   [1, 1]
+#   [1, 1, 1],
+#   [1, 1, 1]
 # ]
 
 # (알고리즘 문제를 풀기에) 잘못된 방법
-arr = [[1] * 2] * 2         #line8
+arr = [[1] * 3] * 2         #line8
 
 # (알고리즘 문제를 풀기에) 올바른 방법
 # sol 1.
-arr  = [[1 for col in range(2)] for row in range(2)]
+arr  = [[1 for col in range(3)] for row in range(2)]
 
 # sol 2.
-arr = [[1] * 2 for i in range(2)]
+arr = [[1] * 3 for i in range(2)]
 
 # 만들려고 하는 이중 배열
 # [
@@ -345,3 +345,19 @@ print(collections.Counter(s1).most_common())
 -  원소의 개수를 뺄 수도 있다.
 
 ## hash
+
+## 삼항연산자
+
+```python
+a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+odd_nums = []
+even_nums = []
+
+for i in a:
+	odd_nums.append(i) if i % 2 != 0 else even_nums.append(i)
+
+print(f'odd nums = {odd_nums}\neven nums = {even_nums}')
+# odd nums = [1, 3, 5, 7, 9]
+# even nums = [2, 4, 6, 8, 10]
+```
+
