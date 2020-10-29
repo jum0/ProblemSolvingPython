@@ -146,6 +146,7 @@ print('abcde'.center(3, "*"))
 `Boj 10995`
 
 ```python
+# ex 1.
 N = 4
 for i in range(1, N+1):
   print(("o" if i % 2 == 0 else "x") * i)
@@ -155,6 +156,19 @@ for i in range(1, N+1):
 # oo
 # xxx
 # oooo
+
+############################################################
+# ex 2.
+a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+odd_nums = []
+even_nums = []
+
+for i in a:
+	odd_nums.append(i) if i % 2 != 0 else even_nums.append(i)
+
+print(f'odd nums = {odd_nums}\neven nums = {even_nums}')
+# odd nums = [1, 3, 5, 7, 9]
+# even nums = [2, 4, 6, 8, 10]
 ```
 
 - `Python` 에서 ` (조건이 True면 실행 if 조건 else 조건이 False 실행)`
@@ -346,18 +360,34 @@ print(collections.Counter(s1).most_common())
 
 ## hash
 
-## 삼항연산자
+## enumerate
 
 ```python
-a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-odd_nums = []
-even_nums = []
+lst = [2, 4, 6, 8]
+for idx, v in enumerate(lst):
+	print(idx, v)
+  # 0 2
+  # 1 4
+  # 2 6
+  # 3 8
 
-for i in a:
-	odd_nums.append(i) if i % 2 != 0 else even_nums.append(i)
+lst_str = ['a', 'b', 'c', 'd']
+for idx, v in enumerate(lst_str):
+	print(idx, v)
+  # 0 a
+	# 1 b
+	# 2 c
+	# 3 d
 
-print(f'odd nums = {odd_nums}\neven nums = {even_nums}')
-# odd nums = [1, 3, 5, 7, 9]
-# even nums = [2, 4, 6, 8, 10]
+dic = {'a': 2, 'b': 3, 'c': 1}
+for idx, v in enumerate(sorted(dic.items(), reverse=True, key=lambda x:x[1])):
+	print(idx, v)
+  # 0 ('b', 3)
+	# 1 ('a', 2)
+	# 2 ('c', 1)
+
+# 참고
+# value 값이 큰 순서대로 key만 리스트로 출력
+res = [k for k, v in sorted(dic.items(), reverse=True, key=lambda x:x[1])]
+print(res) # ['b', 'a', 'c']
 ```
-
