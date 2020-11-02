@@ -391,3 +391,25 @@ for idx, v in enumerate(sorted(dic.items(), reverse=True, key=lambda x:x[1])):
 res = [k for k, v in sorted(dic.items(), reverse=True, key=lambda x:x[1])]
 print(res) # ['b', 'a', 'c']
 ```
+
+## list(배열) 선언
+
+```python
+a = [0] + [1 for i in range(5)] # [0, 1, 1, 1, 1, 1]
+```
+
+## filter() / 배열에서 조건에 맞는 원소 추출
+
+```python
+animals = ['fox', 'frog', 'eagle', 'tiger']
+# f로 시작하는 동물 리스트의 개수
+print(len(list(filter(lambda x: x.startswith('f'), animals)))) # 2
+
+nums = [1, 2, 3, 4, 5, 6, 7]
+# 홀수의 개수
+print([num for num in nums if num % 2 != 0]) 									 # [1, 3, 5, 7]
+print(len([num for num in nums if num % 2 != 0]))							 # 4
+
+print(list(filter(lambda x: x % 2 != 0, nums)))								 # [1, 3, 5, 7]
+print(len(list(filter(lambda x: x % 2 != 0, nums))))					 # 4
+```
