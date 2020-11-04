@@ -83,7 +83,7 @@ for l in range(6, 2, -1):
 # 3
 
 ---------------------------
-x = 1          #line31
+x = 1               #line31
 for i in (2, x+1):
   print("ok")
 ```
@@ -92,7 +92,7 @@ for i in (2, x+1):
 - 오름차순뿐만 아니라 내림차순도 가능하다.
 - `line31` 과 같이 `For` 문의 조건에 충족이 되지 않으면 실행되지 않으며, 오류도 발생하지 않는다.
 
-## abs(x)
+## abs(x) / 절댓값
 
 ```python
 # 정수
@@ -207,7 +207,7 @@ arr = [[0] + [1 for col in range(4)] for row in range(2)]
 ## 얕은 복사, 깊은 복사
 
 ```python
-# 얕은 복사
+############################ 얕은 복사 ############################
 a = [[1, 2], [3, 4]]
 b = a.copy()
 
@@ -221,7 +221,7 @@ b[1].append(5)
 print(a) # [[1, 2], [3, 4, 5]]
 print(b) # [[1, 2], [3, 4, 5]]
 
-# 깊은 복사
+############################ 깊은 복사 ############################
 import copy
 a = [[5, 6], [7, 8]]
 b = copy.deepcopy(a)
@@ -266,7 +266,7 @@ print(list(map(sum, zip(a, b))))
 
 # 2. 리스트 a의 각 원소값을 제곱으로 바꾸고, a와b 리스트의 동일한 인덱스 값을 합한 리스트 출력
 # [6, 10, 16, 24]
-print(list(map(sum, zip(list(map(lambda x: x**2, a)), b)))) 
+print(list(map(sum, zip(map(lambda x: x**2, a), b))))
 ```
 
 - `map()` 함수의 첫 번째 파라미터는 `function(iterable의 각 요소에 적용할 수 있는)`을 써준다.
@@ -286,7 +286,7 @@ print(tuple(zip(n_list_1, n_list_2)))  # ((1, 5), (2, 6), (3, 7), (4, 8))
 str_list = ['a', 'b', 'c', 'd']
 print(list(zip(n_list_1, str_list))) # [(1, 'a'), (2, 'b'), (3, 'c'), (4, 'd')]
 
-# 개수가 동일하지 않으면 가장 적은 개수를 중심으로 묶는다
+# 개수가 동일하지 않으면 가장 적은 개수의 인덱스를 중심으로 묶는다
 tmp_list_1 = [1]
 tmp_list_2 = ['A', 'B']
 tmp_list_3 = ['a', 'b', 'c']
@@ -311,12 +311,79 @@ s = "abcde"
 print(s[::-1]) # edcba
 print(s[::-1][::2]) # eca
 print(s[::-1][1::2]) # db
+
+#################### 팁 ####################
+arr = []
+
+if not arr[-1:]:
+  print('arr is empty') # 출력
 ```
 
 - `[start:end:step]` 을 나타낸다.
 - 1차원 배열에서 Slicing으로 복사할 경우(ex `b = a[:]`), 기존의 a에 영향을 미치지 않는다.
   - 2차원 배열에는 통째로 복사할 경우, 안의 배열 `[[여기],[여기]]` 배열의 원소를 변경할 경우, 원본의 배열도 변경된다.
   - 알고리즘에서 사용하려면, 1차원 배열은 `[:]` 혹은 `[::]` 을 통해서 복사하고, 2차원 배열은 `deepcopy()` 이용하는 게 좋다.
+- 배열이 비어있어도, `arr[-1:]` 은 안터진다.
+  - 부가적으로 배열이 비어있는지 확인은, `not 배열` 을 통해 할 수 있다.
+
+## list comprehension
+
+```python
+num_array_1 = [0] + [1 for _ in range(4)] # [0, 1, 1, 1, 1]
+num_array_2 = [i*i for i in range(5)]     # [0, 1, 4, 9, 16]
+
+word = "가나다"
+word_array_1 = [w*2 for w in word]        # ['가가', '나나', '다다']
+word_array_2 = [w+w for w in word]        # ['가가', '나나', '다다']
+
+
+############################## 조건문 ##############################
+# and
+nums_2_and_3 = [n for n in range(1, 31) if n % 2 == 0 if n % 3 == 0]
+# [6, 12, 18, 24, 30]
+
+# or
+nums_7_or_8 = [n for n in range(1, 31) if (n % 7 == 0 or n % 8 == 0)]
+# [7, 8, 14, 16, 21, 24, 28]
+```
+
+- 조건문에서 두 조건의 교집합(`and`)은 `if`문 두 개를 붙여서 쓴다.
+- 합집합(`or`)은 일반적인 `if`문의 방식을 따른다.
+
+## set
+
+```python
+a = set(range(1,4+1))
+b = set(range(3,6+1))
+
+############## 합집합 ##############
+#              a | b             #
+#          set.union(a, b)       #
+##################################
+print(a | b)						             # {1, 2, 3, 4, 5, 6}
+
+############## 교집합 ##############
+#              a & b             #
+#     set.intersection(a, b)     #
+##################################
+print(a & b)                         # {3, 4}
+
+############## 차집합 ##############
+#              a - b             #
+#      set.difference(a, b)      #
+##################################
+print(a - b)                         # {1, 2}
+
+############ 대칭차집합 #############
+#             a ^ b              #
+# set.symmetric_difference(a, b) #
+##################################
+print(a ^ b)                         # {1, 2, 5, 6}
+```
+
+<img width="180" alt="스크린샷 2020-11-04 오후 4 07 30" src="https://user-images.githubusercontent.com/40762111/98079842-d832fa00-1eb7-11eb-8f52-d7918448429b.png"> <img width="180" alt="스크린샷 2020-11-04 오후 4 09 48" src="https://user-images.githubusercontent.com/40762111/98080025-2b0cb180-1eb8-11eb-9273-da4a2354c6a9.png"><img width="180" alt="스크린샷 2020-11-04 오후 4 10 01" src="https://user-images.githubusercontent.com/40762111/98080050-3233bf80-1eb8-11eb-9711-8bdf6d4e0aa5.png"><img width="180" alt="스크린샷 2020-11-04 오후 4 10 33" src="https://user-images.githubusercontent.com/40762111/98080121-45df2600-1eb8-11eb-8a88-12989c6b9d13.png">
+
+
 
 ## 제곱 및 제곱근
 
@@ -358,8 +425,6 @@ print(collections.Counter(s1).most_common())
 - 빈도수가 많은 순서대로 정렬(근데 정확하게 하기 위해서 `.most_comon()` 쓰자)
 -  원소의 개수를 뺄 수도 있다.
 
-## hash
-
 ## enumerate
 
 ```python
@@ -392,12 +457,6 @@ res = [k for k, v in sorted(dic.items(), reverse=True, key=lambda x:x[1])]
 print(res) # ['b', 'a', 'c']
 ```
 
-## list(배열) 선언
-
-```python
-a = [0] + [1 for i in range(5)] # [0, 1, 1, 1, 1, 1]
-```
-
 ## filter() / 배열에서 조건에 맞는 원소 추출
 
 ```python
@@ -413,3 +472,130 @@ print(len([num for num in nums if num % 2 != 0]))							 # 4
 print(list(filter(lambda x: x % 2 != 0, nums)))								 # [1, 3, 5, 7]
 print(len(list(filter(lambda x: x % 2 != 0, nums))))					 # 4
 ```
+
+## 변수 값 변경
+
+```python
+a, b = 5, 10
+print(f'a = {a}, b = {b}')    # a = 5, b = 10
+a, b = b, a
+print(f'a = {a}, b = {b}')    # a = 10, b = 5
+```
+
+## .sort() / sorted()
+
+```python
+a = [5, 2, 20, 12]
+a.sort()
+print(a) # [2, 5, 12, 20]
+
+a.sort(reverse=True)
+print(a) # [20, 12, 5, 2]
+
+
+############################## 예시 ##############################
+# 이름, 나이, 키
+a = [('h', 26, 181), ('j', 27, 179), ('c', 27, 170), ('j', 27, 183)]
+a_dict = [
+  					{'name': 'h', 'age': 26, 'height': 181},
+  					{'name': 'j', 'age': 27, 'height': 179},
+  					{'name': 'c', 'age': 27, 'height': 170},
+  					{'name': 'j', 'age': 27, 'height': 183},
+         ]
+
+############ 1. 그냥 정렬
+print(sorted(a))
+# [('c', 27, 170), ('h', 27, 179), ('k', 26, 181), ('k', 27, 183)]
+# 첫 번째 요소인 이름을 기준으로 오름차순 정렬 하고 이름이 같으면 나이로, 나이가 같으면 키 순으로 정렬(오름)
+
+############ 2. 키를 기준으로 내림차순으로 정렬
+print(sorted(a, key=lambda str: str[2], reverse=True))
+# [('k', 27, 183), ('k', 26, 181), ('h', 27, 179), ('c', 27, 170)]
+
+############ 3. 나이 순으로 내림차순, 나이가 같으면 이름 순으로 오름차순, 이름이 같으면 키 순으로 내림차순
+print(sorted(a, key=lambda str: (-str[1], str[0], -str[2])))
+# [('c', 27, 170), ('j', 27, 183), ('j', 27, 179), ('h', 26, 181)]
+print(sorted(a_dict, key=lambda str: (-str['age'], str['name'], -str['height'])))
+# [{'name': 'c', 'age': 27, 'height': 170},
+#  {'name': 'j', 'age': 27, 'height': 183},
+#  {'name': 'j', 'age': 27, 'height': 179},
+#  {'name': 'h', 'age': 26, 'height': 181}]
+
+############ 4. 3.의 정렬 상태에서 키만 뽑은 list
+arr = sorted(a_dict, key=lambda str: (-str['age'], str['name'], -str['height']))
+answer = [i['height'] for i in arr]
+print(answer)
+# [170, 183, 179, 181]
+```
+
+- 정렬의 기본은 오름차순인데, `reverse=True` 옵션이나 `-` 를 기준 앞에 붙여 내림차순으로 변경할 수 있다.
+
+## .lower() / .upper()
+
+```python
+a = 'aBcDe'
+
+print(a.lower()) # abcde
+print(a.upper()) # ABCDE
+```
+
+## .count()
+
+```python
+s = 'abbbaaba'
+
+print(s.count('a'))  # 4
+print(s.count('b'))  # 4
+print(s.count('ab')) # 2
+```
+
+## .join() / 문자열 합치기
+
+```python
+s = ['H', 'e', 'l', 'l', 'o']
+
+print(''.join(s))			# Hello
+print(' '.join(s))		# H e l l o
+print('-'.join(s))		# H-e-l-l-o
+print('a'.join(s))		# Haealalao
+```
+
+## .isalpha() / .isdigit() / .isalnum
+
+```python
+str_lst = ['abcd', '한글', '1234', '1 2', 'a1234', 'Hello World']
+
+######### .isalpha() - 문자열이 문자인지 확인, 공백 포함되어 있으면 False #########
+print([s.isalpha() for s in str_lst])
+# [True, True, False, False, False, False]
+
+######### .isdigit() - 문자열이 숫자인지 확인, 공백 포함되어 있으면 False #########
+print([s.isdigit() for s in str_lst])
+# [False, False, True, False, False, False]
+
+######### .isalnum() - 문자열이 문자거나 숫자인지 확인, 공백 포함되어 있으면 False #########
+print([s.isalnum() for s in str_lst])
+# [True, True, True, False, True, False]
+```
+
+## .index()
+
+```python
+num_arr = [1, 2, 3, 4, 5, 1, 2]
+str_arr = ['a', 'ab', 'ac', 'ad', 'a']
+
+print(num_arr.index(2))                      # 1
+print(str_arr.index('a'))                    # 0
+print(str_arr.index('a', 1, len(str_arr)))   # 4
+print(str_arr.index('a', 1, len(str_arr)-1)) # error - 'a' is not in list
+
+num_str = '1234512'
+
+print(num_str.index('2'))                    # 1
+print(num_str.index('2', 1, len(num_str)))   # 1
+print(num_str.index('2', 2, len(num_str)))   # 6
+print(num_str.index('2', 2, len(num_str)-1)) # error - substring not found
+```
+
+- 중복된 값이 있으면 가장 최소의 위치를 리턴
+- 범위를 지정할 때 마지막 숫자는 포함하지 않는다. 즉 `.index('a', 1, 4)` 는 `a` 를 리스트 인덱스의 1번째부터 3번째까지 검색.
