@@ -2,6 +2,8 @@
 
 ## input() / type() / .split()
 
+`Programmers 12930(이상한 문자 만들기)`
+
 ```python
 line = input().split(' ') # 1 2 입력
 print(line) # ['1', '2']
@@ -15,7 +17,7 @@ print(type(line[0])) # <class 'str'>
 - `.split()`
   - 문자열을 자르는 함수
   - `( )` 안에 기준(문자)을 `''(작은 따옴표 혹은 큰 따옴표)` 사이에 써주면 된다.
-  - `split()` 이렇게 쓰면 공백을 기준으로 자르게 된다.
+  - `split()` 이렇게 쓰면 공백을 기준으로 자르게 된다. 하지만 `split(' ')` 이렇게 정확하게 표현하자.
 - `type()`
   - 타입을 체크하는 함수
   - `input()` 으로 받은 값의 타입은 `str` 이다.
@@ -247,6 +249,8 @@ print(b) # [[5, 6], [7, 8, 9]]
 
 `Boj 1000` `Boj 11054`
 
+`Programmers 12930(이상한 문자 만들기)`
+
 ```python
 a, b = map(int, input().split(' ')) # 입력 1 2
 print(type(a), a) # <class 'int'> 1
@@ -308,9 +312,10 @@ print(b[1:4]) # [4, 3, 2]
 print(b[4:1:-1]) # [1, 2, 3] # 인덱스 4부터 인덱스 2까지 거꾸로
 
 s = "abcde"
-print(s[::-1]) # edcba
-print(s[::-1][::2]) # eca
-print(s[::-1][1::2]) # db
+print(s[::-1])       # 뒤에서부터 하나씩                                 # edcba
+print(s[::-1][::2])  # 뒤에서부터 하나씩인 배열 전체에서 idx 하나씩 건너 뛰고    # eca
+print(s[::-1][1::2]) # 뒤에서부터 하나씩인 배열 첫 번째부터 idx 하나씩 건너 뛰고  # db
+print(s[-3:])        # 뒤에서 3번째부터 배열 전체                          # cde
 
 #################### 팁 ####################
 arr = []
@@ -400,6 +405,10 @@ print(type(sqrt)) # <class 'float'>
 power = math.pow(3, 4)
 print(power) # 81.0
 print(type(power)) # <class 'float'>
+
+### 참고
+# 숫자 n의 제곱근이 정수이면 1을, 아니면 -1을 출력
+print(1 if math.sqrt(n) == int(math.sqrt(n)) else -1)
 ```
 
 ## collections
@@ -599,3 +608,17 @@ print(num_str.index('2', 2, len(num_str)-1)) # error - substring not found
 
 - 중복된 값이 있으면 가장 최소의 위치를 리턴
 - 범위를 지정할 때 마지막 숫자는 포함하지 않는다. 즉 `.index('a', 1, 4)` 는 `a` 를 리스트 인덱스의 1번째부터 3번째까지 검색.
+
+## ord() / chr()
+
+```python
+n = 65
+s = 'A'
+
+print(chr(n)) # A
+print(ord(s)) # 65
+
+print(n == ord(s)) # True
+print(chr(n) == s) # True
+```
+
