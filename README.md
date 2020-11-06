@@ -462,7 +462,7 @@ for idx, v in enumerate(sorted(dic.items(), reverse=True, key=lambda x:x[1])):
 
 # 참고
 # value 값이 큰 순서대로 key만 리스트로 출력
-res = [k for k, v in sorted(dic.items(), reverse=True, key=lambda x:x[1])]
+res = [k for k, v in sorted(dic.items(), reverse=True, key=lambda x:x[1])] # 0은 key, 1은 value
 print(res) # ['b', 'a', 'c']
 ```
 
@@ -500,17 +500,29 @@ print(a) # [2, 5, 12, 20]
 
 a.sort(reverse=True)
 print(a) # [20, 12, 5, 2]
+```
 
+#### 리스트 속 리스트(튜플) 정렬
 
-############################## 예시 ##############################
+```python
+################################## 리스트 속 리스트 정렬 ##################################
+lst = [[1, 3], [2, 4], [3, 2], [4, 1]]
+
+############ 1.value를 중심으로 오름차순 정렬 key(첫 번째 원소)만 출력
+print(
+  [k for k, v in sorted(lst, key=lambda x: x[1])]
+)
+# [4, 3, 1, 2]
+
+############ 2.value를 중심으로 오름차순 정렬 key(첫 번째 원소), value를 리스트 형태로 출력
+print(
+  [[k, v] for k, v in sorted(lst, key=lambda x: x[1])]
+)
+# [[4, 1], [3, 2], [1, 3], [2, 4]]
+
+################################## 리스트 속 튜플 정렬 ###################################
 # 이름, 나이, 키
 a = [('h', 26, 181), ('j', 27, 179), ('c', 27, 170), ('j', 27, 183)]
-a_dict = [
-  					{'name': 'h', 'age': 26, 'height': 181},
-  					{'name': 'j', 'age': 27, 'height': 179},
-  					{'name': 'c', 'age': 27, 'height': 170},
-  					{'name': 'j', 'age': 27, 'height': 183},
-         ]
 
 ############ 1. 그냥 정렬
 print(sorted(a))
@@ -522,15 +534,32 @@ print(sorted(a, key=lambda str: str[2], reverse=True))
 # [('k', 27, 183), ('k', 26, 181), ('h', 27, 179), ('c', 27, 170)]
 
 ############ 3. 나이 순으로 내림차순, 나이가 같으면 이름 순으로 오름차순, 이름이 같으면 키 순으로 내림차순
-print(sorted(a, key=lambda str: (-str[1], str[0], -str[2])))
+print(
+  sorted(a, key=lambda str: (-str[1], str[0], -str[2]))
+)
+print(
+  [(n, a, h) for n, a, h in sorted(a, key=lambda str: (-str[1], str[0], -str[2]))]
+)
 # [('c', 27, 170), ('j', 27, 183), ('j', 27, 179), ('h', 26, 181)]
+```
+
+#### 리스트 속 딕셔너리 정렬
+
+```python
+a_dict = [
+  					{'name': 'h', 'age': 26, 'height': 181},
+  					{'name': 'j', 'age': 27, 'height': 179},
+  					{'name': 'c', 'age': 27, 'height': 170},
+  					{'name': 'j', 'age': 27, 'height': 183},
+         ]
+############ 1. 나이 순으로 내림차순, 나이가 같으면 이름 순으로 오름차순, 이름이 같으면 키 순으로 내림차순
 print(sorted(a_dict, key=lambda str: (-str['age'], str['name'], -str['height'])))
 # [{'name': 'c', 'age': 27, 'height': 170},
 #  {'name': 'j', 'age': 27, 'height': 183},
 #  {'name': 'j', 'age': 27, 'height': 179},
 #  {'name': 'h', 'age': 26, 'height': 181}]
 
-############ 4. 3.의 정렬 상태에서 키만 뽑은 list
+############ 2. 1.의 정렬 상태에서 키만 뽑은 list
 arr = sorted(a_dict, key=lambda str: (-str['age'], str['name'], -str['height']))
 answer = [i['height'] for i in arr]
 print(answer)
@@ -538,6 +567,30 @@ print(answer)
 ```
 
 - 정렬의 기본은 오름차순인데, `reverse=True` 옵션이나 `-` 를 기준 앞에 붙여 내림차순으로 변경할 수 있다.
+
+#### 딕셔너리 정렬
+
+```python
+dic = {'a': 0.14, 'b': 0.16, 'c': 0.2, 'd': 0.25, 'e': 0.0, 'f': 0.3}
+
+############ 1. 그냥 sort - key를 중심으로 오름차순으로 정렬
+print([k for k, v in sorted(dic.items())])
+print([k for k,v in sorted(dic.items(), key=lambda x: x[0])])
+# ['a', 'b', 'c', 'd', 'e', 'f']
+
+############ 2. reverse sort - key를 중심으로 내림차순으로 정렬
+print([k for k, v in sorted(dic.items(), reverse=True)])
+print([k for k,v in sorted(dic.items(), key=lambda x: x[0], reverse=True)])
+# ['f', 'e', 'd', 'c', 'b', 'a']
+
+############ 3. value를 중심으로 key를 오름차순으로 정렬
+print([k for k, v in sorted(dic.items(), key=lambda x: x[1])])
+# ['e', 'a', 'b', 'c', 'd', 'f']
+
+############ 4. value를 중심으로 key를 내림차순으로 정렬
+print([k for k, v in sorted(dic.items(), key=lambda x: x[1], reverse=True)])
+# ['f', 'd', 'c', 'b', 'a', 'e']
+```
 
 ## .lower() / .upper()
 
@@ -560,6 +613,8 @@ print(s.count('ab')) # 2
 
 ## .join() / 문자열 합치기
 
+`Programmers 17681(2018 KAKAO BLIIND RECRUITMENT [1차] 비밀지도)`
+
 ```python
 s = ['H', 'e', 'l', 'l', 'o']
 
@@ -567,6 +622,23 @@ print(''.join(s))			# Hello
 print(' '.join(s))		# H e l l o
 print('-'.join(s))		# H-e-l-l-o
 print('a'.join(s))		# Haealalao
+
+############################## 응용 ##############################
+arr = ['00011', '00011', '00111', '00101', '00111']
+
+# arr에서 '0'을 공백으로 '1'을 '#'으로 변경하기
+res = [''.join(['#' if i == '1' else ' ' for i in s]) for s in arr]
+# ['   ##', '   ##', '  ###', '  # #', '  ###']
+
+####### 만드는 방법 #######
+# 1. 먼저 전체 for문 만들기
+res_1 = [s for s in arr]
+# 2. s의 for문 만들기
+res_2 = [[i for i in s] for s in arr]
+# 3. 조건 넣어주기
+res_3 = [['#' if i == '1' else ' ' for i in s] for s in arr]
+# 4. join() 해주기 (합칠 때 그냥 합치는 경우 ''.join())
+res_4 = [''.join('#' if i == '1' else ' ' for i in s) for s in arr]
 ```
 
 ## .isalpha() / .isdigit() / .isalnum
@@ -622,3 +694,47 @@ print(n == ord(s)) # True
 print(chr(n) == s) # True
 ```
 
+## if statement / compiler check
+
+```python
+arr = [1]
+
+if len(arr) > 1 and arr[-1] == arr[-2]:
+  arr.pop()
+  arr.pop()
+```
+
+- `if` 문에서 첫 번째 조건에서 `False` 가 발생하면 컴파일러는 두 번째 조건을 확인하지 않는다.
+
+## .rjust() / .ljust()
+
+```python
+s = 'ss'
+
+# 총 5칸 중에서 s를 왼쪽으로 정렬하고 나머지 부분을 '0'으로 채우기
+print(s.ljust(5, '0'))
+# ss000
+
+# 총 5칸 중에서 s를 오른쪽으로 정렬하고 나머지 부분을 '0'으로 채우기
+print(s.rjust(5, '0'))
+# 000ss
+```
+
+## .replace()
+
+`Programmers 17681(2018 KAKAO BLIIND RECRUITMENT [1차] 비밀지도)`
+
+```python
+s = '0010110011'
+new_s = s.replace('0', 'F').replace('1', 'T')
+
+print(new_s) # FFTFTTFFTT
+
+#################### 응용 ####################
+arr = ['00011', '00011', '00111', '00101', '00111']
+res = [s.replace('0', ' ').replace('1', '#') for s in arr]
+
+print(res)  # ['   ##', '   ##', '  ###', '  # #', '  ###']
+```
+
+- `문자열.replace(변경 이전의 문자 또는 문자열, 변경 이후의 문자 또는 문자열)`
