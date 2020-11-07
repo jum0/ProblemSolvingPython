@@ -135,7 +135,7 @@ print('cat'.center(6, '*')) # '*cat**'
 print('cat'.center(8, '*')) # '**cat***'
 
 # 문자열만 그대로 출력하는 경우
-print('abcde'.center(3, "*"))
+print('abcde'.center(3, "*")) # 조건에 맞지 않아서 문자열 그대로 출력
 ```
 
 - `String.center(길이, 추가할 문자)`
@@ -295,6 +295,13 @@ tmp_list_1 = [1]
 tmp_list_2 = ['A', 'B']
 tmp_list_3 = ['a', 'b', 'c']
 print(list(zip(tmp_list_1, tmp_list_2, tmp_list_3))) # [(1, 'A', 'a')]
+
+# 아직 정리 ㄴ
+C = [7,5,4,5,3]
+print(list([x, y] for x, y in zip(C, C[1:]))) # [[7, 5], [5, 4], [4, 5], [5, 3]]
+print(list([x, y] for x, y in zip(C, C[2:]))) # [[7, 4], [5, 5], [4, 3]]
+print(list([x, y] for x, y in zip(C, C[3:]))) # [[7, 5]], [5, 3]
+print(list( x*y for x, y in zip(C, C[1:])))   # [35, 20, 45, 15]
 ```
 
 - `zip` 은 동일한 개수로 이루어진 자료형을 묶어주는 역할을 한다.
@@ -423,6 +430,8 @@ s2 = "Hello"
 
 print(collections.Counter(s1))
 # Counter({'l': 3, 'o': 2, 'H': 1, 'e': 1, ' ': 1, 'W': 1, 'r': 1, 'd': 1, '!': 1})
+print(collections.Counter(s1)['l'])
+# 3
 print(list(collections.Counter(s1)))
 # ['H', 'e', 'l', 'o', ' ', 'W', 'r', 'd', '!']
 print(list(collections.Counter(s1) - collections.Counter(s2)))
@@ -472,12 +481,15 @@ print(res) # ['b', 'a', 'c']
 animals = ['fox', 'frog', 'eagle', 'tiger']
 # f로 시작하는 동물 리스트의 개수
 print(len(list(filter(lambda x: x.startswith('f'), animals)))) # 2
+print(len([x for x in animals if x.startswith('f') == True])) # 2
 
 nums = [1, 2, 3, 4, 5, 6, 7]
 # 홀수의 개수
+# list comprehension
 print([num for num in nums if num % 2 != 0]) 									 # [1, 3, 5, 7]
 print(len([num for num in nums if num % 2 != 0]))							 # 4
 
+# filter()
 print(list(filter(lambda x: x % 2 != 0, nums)))								 # [1, 3, 5, 7]
 print(len(list(filter(lambda x: x % 2 != 0, nums))))					 # 4
 ```
@@ -580,7 +592,7 @@ print([k for k,v in sorted(dic.items(), key=lambda x: x[0])])
 
 ############ 2. reverse sort - key를 중심으로 내림차순으로 정렬
 print([k for k, v in sorted(dic.items(), reverse=True)])
-print([k for k,v in sorted(dic.items(), key=lambda x: x[0], reverse=True)])
+print([k for k, v in sorted(dic.items(), key=lambda x: x[0], reverse=True)])
 # ['f', 'e', 'd', 'c', 'b', 'a']
 
 ############ 3. value를 중심으로 key를 오름차순으로 정렬
@@ -738,3 +750,50 @@ print(res)  # ['   ##', '   ##', '  ###', '  # #', '  ###']
 ```
 
 - `문자열.replace(변경 이전의 문자 또는 문자열, 변경 이후의 문자 또는 문자열)`
+
+## .find()
+
+```python
+s = '가나다라 마바사아 자차카타 파하'
+
+print(s.find('마')) # 5
+print(s.find('가')) # 0
+
+# 인덱스 1부터 끝까지 알아볼건데 '가' 있어?
+# 찾으면 인덱스 반환
+# 못 찾으면 -1 반환
+print(s.find('가', 1)) # -1
+
+# 인덱스 2부터 4까지 알아볼건데 '라' 있어?              # 주의 끝의 값은 포함 x
+# 찾으면 인덱스 반환
+# 못 찾으면 -1 반환
+print(s.find('라', 2, 5)) # 3
+```
+
+## .startswith() / .endswith()
+
+```python
+s = '가나다라 마바사아 자차카타 파하'
+
+print(s.startswith('가')) # True
+print(s.startswith('다')) # False
+
+# 인덱스 2부터 끝까지 알아볼건데 '다'로 시작해?
+print(s.startswith('다', 2)) # True
+# 인덱스 2부터 4까지 알아볼건데 '다'로 시작해?              # 주의 끝의 값은 포함 x
+print(s.startswith('다', 2, 5)) # True
+
+print(s.startswith('사', s.find('사'))) # True
+
+----------------------------------------------------
+s = '가나다라 마바사아 자차카타 파하'
+
+print(s.endswith('마')) # False
+print(s.endswith('하')) # True
+
+# 인덱스 6부터 끝까지 알아볼건데 '하'로 끝나?
+print(s.endswith('하', 6)) # True
+# 인덱스 10부터 15까지 알아볼건데 '하'로 끝나?
+print(s.endswith('하', 10, 16)) # False
+print(s.endswith('하', 10, 17)) # True
+```
